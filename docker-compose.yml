@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx_docker
+    ports:
+      - 8080:80
+    volumes:
+      - ./html:/usr/share/nginx/html
+  node:
+    build:
+      context: ./docker
+      dockerfile: node_docker    
+    ports:
+      - 3000:3000
+  mongo:
+    image: 7thcode/mongo:1.0.0
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27027:27017
+    volumes:
+      - ./db:/data/db
+      - ./configdb:/data/configdb
