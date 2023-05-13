@@ -1,6 +1,7 @@
 version: '3.1'
 services:
   nginx:
+    container_name: MEAN-NGINX
     build:
       context: ./docker
       dockerfile: nginx_docker
@@ -8,14 +9,17 @@ services:
       - 8080:80
     volumes:
       - ./html:/usr/share/nginx/html
+      - ./config-nginx:/etc/nginx/conf.d
   node:
+    container_name: MEAN-NODE    
     build:
       context: ./docker
-      dockerfile: node_docker    
+      dockerfile: node_docker
     ports:
-      - 3000:3000
+      - 3000:3000 
   mongo:
-    image: 7thcode/mongo:1.0.0
+    container_name: MEAN-MONGO
+    image: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -24,4 +28,4 @@ services:
       - 27027:27017
     volumes:
       - ./db:/data/db
-      - ./configdb:/data/configdb
+      - ./config-mongo:/data/configdb

@@ -1,45 +1,4 @@
 FROM nginx
 
-# 環境変数の設定
-ENV PATH /usr/local/bin:$PATH
-ENV DEBIAN_FRONTEND noninteractive
-ENV DEBCONF_NOWARNINGS yes
-
-# 日本語UTF-8に設定
-RUN apt-get update && apt-get install -y locales && locale-gen ja_JP.UTF-8
-
-# ロケール環境変数の設定
-ENV LANG ja_JP.UTF-8
-ENV LANGUAGE ja_JP:ja
-ENV LC_ALL ja_JP.UTF-8
-
-# インストール
-RUN apt-get update && apt-get install -y sed zsh nano
-
-# zshの実行
-RUN zsh
-
-# 環境変数の設定
-ENV SHELL /usr/bin/zsh
-
-# ユーザ
-# ログインシェルを指定
-RUN sed -i.bak "s|$HOME:|$HOME:$SHELL|" /etc/passwd
-
-# ユーザーとホームディレクトリの環境変数設定
-ENV USER user
-ENV HOME /home/$USER
-
-# 一般ユーザーアカウントを追加
-RUN useradd -m $USER
-RUN gpasswd -a $USER sudo
-RUN echo "$USER:password" | chpasswd
-
-# 以降のRUN/CMDを実行するユーザー
-USER $USER
-
-# 以降の作業ディレクトリを指定
-WORKDIR $HOME
-
-# .zshrcコピー
-COPY .zshrc $HOME
+RUN apt-get update
+RUN apt-get install -y python3
