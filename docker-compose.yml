@@ -16,7 +16,7 @@ services:
       context: ./docker
       dockerfile: node_docker
     ports:
-      - 3000:3000 
+      - 3000:3000
   mongo:
     container_name: MEAN-MONGO
     image: mongo
@@ -27,5 +27,7 @@ services:
     ports:
       - 27027:27017
     volumes:
-      - ./db:/data/db
+      - mongodb_data:/data/db
       - ./config-mongo:/data/configdb
+volumes:
+  mongodb_data:      
