@@ -11,7 +11,7 @@ services:
       - ./html:/usr/share/nginx/html
       - ./config-nginx:/etc/nginx/conf.d
   node:
-    container_name: MEAN-NODE    
+    container_name: MEAN-NODE
     build:
       context: ./docker
       dockerfile: node_docker
@@ -30,4 +30,4 @@ services:
       - mongodb_data:/data/db
       - ./config-mongo:/data/configdb
 volumes:
-  mongodb_data:      
+  mongodb_data:
